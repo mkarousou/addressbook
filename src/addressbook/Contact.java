@@ -7,7 +7,7 @@ package addressbook;
 
 /**
  *
- * @author gtsatiris
+ * @author mkarousou
  */
 public class Contact {
     private String name;
