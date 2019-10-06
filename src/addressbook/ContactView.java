@@ -11,5 +11,5 @@ package addressbook;
  */
 public class ContactView {
     
-    
+     
 }
