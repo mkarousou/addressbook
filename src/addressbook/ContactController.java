@@ -58,7 +58,7 @@ public class ContactController {
         return null;
     }
     
-    public void searchContactsbyName(String name, String newName, String phone, String email, String address){
+    public void modifyContactsbyName(String name, String newName, String phone, String email, String address){
         for (int i = 0; i < contactList.size(); i++){
             Contact cnt = contactList.get(i);
             

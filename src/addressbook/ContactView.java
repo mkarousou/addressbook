@@ -5,11 +5,81 @@
  */
 package addressbook;
 
+import java.util.Scanner;
+
 /**
  *
  * @author mkarousou
  */
 public class ContactView {
     
-     
+   private ContactController controller;
+   
+   public ContactView(){
+       this.controller = new ContactController();
+   }
+   
+   public void mainLoop(){
+       System.out.println("Menu");
+       System.out.println("1. View all contacts");
+       System.out.println("2. Add new contact");
+       System.out.println("3. Search contact by name");
+       System.out.println("4. Search contact by phone");
+       System.out.println("5. Modify contact by name");
+       System.out.println("6. Delete contact by name");
+       System.out.println("7. Exit");
+       
+       Scanner inScn = new Scanner(System.in);
+       String input = inScn.nextLine();
+       if(input.equals("1")){
+           
+       }
+       else if(input.equals("2")){
+           
+       }
+       else if(input.equals("3")){
+           
+       }
+       else if(input.equals("4")){
+           
+       }
+       else if(input.equals("5")){
+           
+       }
+       else if(input.equals("6")){
+           
+       }
+       else if(input.equals("7")){
+           
+       }
+       else{
+           
+       }
+           
+       
+   }
+   
+   public void showContacts(){
+       
+   }
+   
+   public void processCreation(){
+       
+   }
+   
+   public void processSearchByName(){
+       
+   }
+   
+   public void processSearchByPhone(){
+       
+   }
+   
+   public void processDelete(){
+       
+   }
+   
+   public void processExit(){
+       //TODO
+   }
 }
