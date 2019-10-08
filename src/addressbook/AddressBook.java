@@ -15,7 +15,8 @@ public class AddressBook {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        ContactView view = new ContactView();
+        view.mainLoop();
     }
     
 }
