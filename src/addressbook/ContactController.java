@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package addressbook;
 
 import java.io.FileInputStream;
@@ -16,6 +11,8 @@ import java.util.ArrayList;
  *
  * @author mkarousou
  */
+
+//Controller class. Implements all major functionality
 public class ContactController {
     
     private ArrayList<Contact> contactList;
@@ -23,6 +20,7 @@ public class ContactController {
     public ContactController () throws IOException, ClassNotFoundException{
         this.contactList = new ArrayList<Contact>();
         
+        //load contact list from file
         FileInputStream fis = new FileInputStream("contacts.addr");
         ObjectInputStream ois = new ObjectInputStream(fis);
         this.contactList = (ArrayList)ois.readObject();
@@ -34,11 +32,13 @@ public class ContactController {
         return this.contactList;
     }
     
+    //creates new contact and adds it to contactlist
     public void createNewContact (String name, String phone, String email, String address){
         Contact newcont = new Contact (name, phone, email, address);
         this.contactList.add(newcont);    
     }
     
+    //returns null object if contact not found
     public Contact searchContactsbyName(String name){
         for (int i = 0; i < contactList.size(); i++){
             Contact cnt = contactList.get(i);
@@ -50,6 +50,7 @@ public class ContactController {
         return null;
     }
     
+    //returns null object if contact not found
     public Contact searchContactbyPhone(String phone){
         for (int i = 0; i < contactList.size(); i++){
             Contact cnt = contactList.get(i);
@@ -61,10 +62,12 @@ public class ContactController {
         return null;
     }
     
+    //finds contact
     public void modifyContactsbyName(String name, String newName, String phone, String email, String address){
         for (int i = 0; i < contactList.size(); i++){
             Contact cnt = contactList.get(i);
             
+            //if contact found, modify
             if (name.equals(cnt.getName())){
                 cnt.setName(newName);
                 cnt.setPhone(phone);
@@ -75,6 +78,7 @@ public class ContactController {
         }    
     } 
     
+    //finds contact and removes it from contactlist
     public void deleteContactbyName(String name){
         for (int i = 0; i < contactList.size(); i++){
             Contact cnt = contactList.get(i);
@@ -85,6 +89,7 @@ public class ContactController {
         }
     }
     
+    //opens file and saves contactlist
     public boolean saveAndExit(){
         try{
             FileOutputStream fos = new FileOutputStream("contacts.addr");

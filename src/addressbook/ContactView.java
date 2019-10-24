@@ -1,13 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package addressbook;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -15,11 +8,15 @@ import java.util.Scanner;
  *
  * @author mkarousou
  */
+
+//View class. Implements user input and output functionality
 public class ContactView {
     
     private ContactController controller;
     private Scanner inScanner;
    
+    
+    //if contact file cannot open, leaves fields null
     public ContactView(){
         try
         {
@@ -33,8 +30,10 @@ public class ContactView {
             return;
         }
     }   
-   
+    
+    //main loop of application
     public void mainLoop(){
+        //if controller is null (contact file could not be loaded), the application returns
         if(this.controller == null)
             return;
         while(true) {
@@ -87,7 +86,8 @@ public class ContactView {
         }
         System.out.println();
     }
-   
+    
+    //if modify is true, it modifies an existing contact. If not, it creates a new one
     public void processCreation(Boolean modify){
         System.out.println();
         String oldName = "";
@@ -154,9 +154,11 @@ public class ContactView {
         System.out.println();
     }
 
+    //calls process creation with modify = true
     public void processModification(){
         this.processCreation(true);
     }
+    
     public void processDelete(){
         System.out.println();
         System.out.println("Please enter name of contact to delete");
