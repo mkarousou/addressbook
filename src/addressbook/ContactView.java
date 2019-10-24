@@ -175,7 +175,7 @@ public class ContactView {
             System.out.println("Closing...");
         }
         else
-            System.out.println("***Could not save1 contacts!***");
+            System.out.println("***Could not save contacts!***");
         System.out.println();
     }
 }
