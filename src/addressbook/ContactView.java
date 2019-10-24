@@ -5,6 +5,10 @@
  */
 package addressbook;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -13,13 +17,15 @@ import java.util.Scanner;
  */
 public class ContactView {
     
-   private ContactController controller;
+    private ContactController controller;
+    private Scanner inScanner;
    
-   public ContactView(){
+    public ContactView(){
        this.controller = new ContactController();
-   }
+       this.inScanner = new Scanner(System.in);
+    }   
    
-   public void mainLoop(){
+    public void mainLoop(){
         while(true) {
             System.out.println("Menu");
             System.out.println("1. View all contacts");
@@ -30,13 +36,12 @@ public class ContactView {
             System.out.println("6. Delete contact by name");
             System.out.println("7. Exit");
 
-            Scanner inScn = new Scanner(System.in);
-            String input = inScn.nextLine();
+            String input = this.inScanner.nextLine();
             if(input.equals("1")){
                 this.showContacts();
             }
             else if(input.equals("2")){
-                this.processCreation();
+                this.processCreation(false);
             }
             else if(input.equals("3")){
                 this.processSearchByName();
@@ -57,33 +62,109 @@ public class ContactView {
             else{
                 System.out.println("Wrong input!! Must be between 1 and 7!");
             }
-       }
-   }
+        }
+    }
    
-   public void showContacts(){
-       
-   }
+    public void showContacts(){
+        ArrayList<Contact> contacts = this.controller.getContactList();
+        System.out.println();
+        System.out.println("Full Name\t\tPhone\t\tEmail\t\t\tAddress");
+        System.out.println("------------------------------------------------------------------------------------");
+        for(Contact ct: contacts)
+        {
+            System.out.println(ct.toString());
+        }
+        System.out.println();
+    }
    
-   public void processCreation(){
-       
-   }
+    public void processCreation(Boolean modify){
+        System.out.println();
+        String oldName = "";
+        if(modify)
+        {
+            System.out.println("Please enter name of contact to modify");
+            oldName = this.inScanner.nextLine();
+        }
+        System.out.println("Please enter full name");
+        String name = this.inScanner.nextLine();
+        System.out.println("Please enter phone number");
+        String phone = this.inScanner.nextLine();
+        String email = "";
+        while(true)
+        {
+            System.out.println("Please enter email address");
+            email = this.inScanner.nextLine();
+            if(email.indexOf("@")>0)
+                break;
+            else
+                System.out.println("***Ivalid email address!***");
+        }
+        System.out.println("Please enter street address");
+        String address = this.inScanner.nextLine();
+        
+        if(modify)
+            this.controller.modifyContactsbyName(oldName, name, phone, email, address);
+        else
+            this.controller.createNewContact(name, phone, email, address);
+        
+        System.out.println("Transaction successful");
+        System.out.println();
+    }
    
-   public void processSearchByName(){
-       
-   }
+    public void processSearchByName(){
+        System.out.println();
+        System.out.println("Please enter name to search");
+        String name = this.inScanner.nextLine();
+        Contact foundCont = this.controller.searchContactsbyName(name);
+        if(foundCont != null)
+        {
+            System.out.println("Full Name\t\tPhone\t\tEmail\t\t\tAddress");
+            System.out.println("------------------------------------------------------------------------------------");
+            System.out.println(foundCont.toString());
+        }
+        else
+            System.out.println("***Contact not found!***");
+        System.out.println();
+    }
    
-   public void processSearchByPhone(){
-       
-   }
-   
-   public void processModification(){
-       
-   }
-   public void processDelete(){
-       
-   }
-   
-   public void processExit(){
-       //TODO
-   }
+    public void processSearchByPhone(){
+        System.out.println();
+        System.out.println("Please enter phone number to search");
+        String phone = this.inScanner.nextLine();
+        Contact foundCont = this.controller.searchContactbyPhone(phone);
+        if(foundCont != null)
+        {
+            System.out.println("Full Name\t\tPhone\t\tEmail\t\t\tAddress");
+            System.out.println("------------------------------------------------------------------------------------");
+            System.out.println(foundCont.toString());
+        }
+        else
+            System.out.println("***Contact not found!***");
+        System.out.println();
+    }
+
+    public void processModification(){
+        this.processCreation(true);
+    }
+    public void processDelete(){
+        System.out.println();
+        System.out.println("Please enter name of contact to delete");
+        String name = this.inScanner.nextLine();
+        this.controller.deleteContactbyName(name);
+        System.out.println("Transaction successful");
+        System.out.println();
+    }
+
+    public void processExit(){
+        try{
+            FileOutputStream fos = new FileOutputStream("contacts.addr");
+            ObjectOutputStream oos= new ObjectOutputStream(fos);
+            oos.writeObject(this.controller.getContactList());
+            oos.close();
+            fos.close();
+        }catch(IOException ioe){
+            System.out.println("***Could not save contacts!***");
+            ioe.printStackTrace();
+        }
+    }
 }

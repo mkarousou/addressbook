@@ -5,6 +5,9 @@
  */
 package addressbook;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 
 /**
@@ -17,14 +20,22 @@ public class ContactController {
     
     public ContactController (){
         this.contactList = new ArrayList<Contact>();
-        Contact contact1 = new Contact ("Maria Karousou", "6995846785", "mkarousou@gmail.com", "Klemanso 16");
-        this.contactList.add(contact1);
-        Contact contact2 = new Contact ("Giorgos Tsatiris", "6989846385", "gtsatiris@gmail.com", "Neorion 20");
-        this.contactList.add(contact2);
-        Contact contact3 = new Contact ("Eleni Spyrou", "6973388761", "elenspyr@gmail.com", "Karatza 4");
-        this.contactList.add(contact3);
-        Contact contact4 = new Contact ("Dimitris Papadopoulos", "6932908702", "dimpapado@gmail.com", "Moutsopoulou 6");
-        this.contactList.add(contact4);
+        
+        try{
+            FileInputStream fis = new FileInputStream("contacts.addr");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            this.contactList = (ArrayList)ois.readObject();
+            ois.close();
+            fis.close();
+        }catch(IOException ioe){
+            System.out.println("***Could not retrieve contacts!***");
+            ioe.printStackTrace();
+            return;
+        }catch(ClassNotFoundException c){
+            System.out.println("***Could not retrieve contacts!***");
+            c.printStackTrace();
+            return;
+        }
     }
     
     public ArrayList<Contact> getContactList(){

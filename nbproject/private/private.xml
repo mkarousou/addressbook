@@ -5,8 +5,8 @@
         <group>
             <file>file:/C:/Users/gtsatiris/Documents/NetBeansProjects/Repos/addressbook/src/addressbook/Contact.java</file>
             <file>file:/C:/Users/gtsatiris/Documents/NetBeansProjects/Repos/addressbook/src/addressbook/AddressBook.java</file>
-            <file>file:/C:/Users/gtsatiris/Documents/NetBeansProjects/Repos/addressbook/src/addressbook/ContactControler.java</file>
             <file>file:/C:/Users/gtsatiris/Documents/NetBeansProjects/Repos/addressbook/src/addressbook/ContactView.java</file>
+            <file>file:/C:/Users/gtsatiris/Documents/NetBeansProjects/Repos/addressbook/src/addressbook/ContactController.java</file>
         </group>
     </open-files>
 </project-private>

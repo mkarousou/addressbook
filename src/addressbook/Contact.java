@@ -5,11 +5,13 @@
  */
 package addressbook;
 
+import java.io.Serializable;
+
 /**
  *
  * @author mkarousou
  */
-public class Contact {
+public class Contact implements Serializable {
     private String name;
     private String phone;
     private String email;
@@ -53,6 +55,9 @@ public class Contact {
     public void setAddress(String address) {
         this.address = address;
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return name + "\t" + phone + "\t" + email + "\t" + address;
+    }
 }
