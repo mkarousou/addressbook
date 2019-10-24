@@ -21,11 +21,22 @@ public class ContactView {
     private Scanner inScanner;
    
     public ContactView(){
-       this.controller = new ContactController();
-       this.inScanner = new Scanner(System.in);
+        try
+        {
+            this.controller = new ContactController();
+            this.inScanner = new Scanner(System.in);
+        }catch(IOException ioe){
+            System.out.println("***Could not retrieve contacts!***");
+            return;
+        }catch(ClassNotFoundException c){
+            System.out.println("***Could not retrieve contacts!***");
+            return;
+        }
     }   
    
     public void mainLoop(){
+        if(this.controller == null)
+            return;
         while(true) {
             System.out.println("Menu");
             System.out.println("1. View all contacts");
@@ -156,15 +167,15 @@ public class ContactView {
     }
 
     public void processExit(){
-        try{
-            FileOutputStream fos = new FileOutputStream("contacts.addr");
-            ObjectOutputStream oos= new ObjectOutputStream(fos);
-            oos.writeObject(this.controller.getContactList());
-            oos.close();
-            fos.close();
-        }catch(IOException ioe){
-            System.out.println("***Could not save contacts!***");
-            ioe.printStackTrace();
+        System.out.println();
+        System.out.println("Saving contacts...");
+        if(this.controller.saveAndExit())
+        {
+            System.out.println("Transaction successful");
+            System.out.println("Closing...");
         }
+        else
+            System.out.println("***Could not save1 contacts!***");
+        System.out.println();
     }
 }

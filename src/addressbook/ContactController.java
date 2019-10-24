@@ -6,8 +6,10 @@
 package addressbook;
 
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 /**
@@ -18,24 +20,14 @@ public class ContactController {
     
     private ArrayList<Contact> contactList;
     
-    public ContactController (){
+    public ContactController () throws IOException, ClassNotFoundException{
         this.contactList = new ArrayList<Contact>();
         
-        try{
-            FileInputStream fis = new FileInputStream("contacts.addr");
-            ObjectInputStream ois = new ObjectInputStream(fis);
-            this.contactList = (ArrayList)ois.readObject();
-            ois.close();
-            fis.close();
-        }catch(IOException ioe){
-            System.out.println("***Could not retrieve contacts!***");
-            ioe.printStackTrace();
-            return;
-        }catch(ClassNotFoundException c){
-            System.out.println("***Could not retrieve contacts!***");
-            c.printStackTrace();
-            return;
-        }
+        FileInputStream fis = new FileInputStream("contacts.addr");
+        ObjectInputStream ois = new ObjectInputStream(fis);
+        this.contactList = (ArrayList)ois.readObject();
+        ois.close();
+        fis.close();
     }
     
     public ArrayList<Contact> getContactList(){
@@ -94,7 +86,15 @@ public class ContactController {
     }
     
     public boolean saveAndExit(){
-        //TODO
-        return true;
+        try{
+            FileOutputStream fos = new FileOutputStream("contacts.addr");
+            ObjectOutputStream oos= new ObjectOutputStream(fos);
+            oos.writeObject(this.contactList);
+            oos.close();
+            fos.close();
+            return true;
+        }catch(IOException ioe){
+            return false;
+        }
     }
 }
